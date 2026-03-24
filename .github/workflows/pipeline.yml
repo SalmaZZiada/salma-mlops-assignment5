@@ -1,0 +1,51 @@
+name: ML Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+
+      - run: pip install mlflow scikit-learn pandas dvc
+
+      - run: dvc pull
+
+      - run: python train.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: model-info
+          path: model_info.txt
+
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+
+      - run: pip install mlflow
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: model-info
+
+      - run: python check_threshold.py
+
+      - run: |
+          echo "Building Docker image for Run ID: $(cat model_info.txt)"
