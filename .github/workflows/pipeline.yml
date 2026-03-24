@@ -51,6 +51,12 @@ jobs:
           name: model-artifacts
           path: .
 
+      
+      - name: Fix artifact structure
+        run: |
+            mv model-artifacts/* .
+
+
       - name: Check threshold
         env:
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
