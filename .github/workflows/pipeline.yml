@@ -27,8 +27,10 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: model-info
-          path: model_info.txt
+          name: model-artifacts
+          path: |
+            model_info.txt
+            mlruns/
 
 
   deploy:
@@ -46,7 +48,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: model-info
+          name: model-artifacts
 
       - name: Check threshold
         env:
