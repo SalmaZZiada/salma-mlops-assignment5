@@ -46,11 +46,14 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: model-artifacts
-          path: .
-
-      - name: Debug files
-        run: ls -R
+      - run: |
+          ls -R
           
+      - run: |
+          cp -r model-artifacts/mlruns .
+          cp model-artifacts/model_info.txt .
+
+
       - name: Check threshold
         run: python check_threshold.py
 
