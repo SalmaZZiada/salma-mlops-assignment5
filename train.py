@@ -4,7 +4,7 @@ import uuid
 run_id = str(uuid.uuid4())
 
 # نتحكم في accuracy
-accuracy = 0.90   # غيريها لـ 0.90 في النجاح
+accuracy = 0.80   # غيريها لـ 0.90 في النجاح
 
 print("Starting MLflow run...")
 print(f"Run ID: {run_id}")
