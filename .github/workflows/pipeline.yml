@@ -56,5 +56,6 @@ jobs:
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
         run: python check_threshold.py
 
-      - run: |
+      - name: Build Docker image
+        run: |
           echo "Building Docker image for Run ID: $(cat model_info.txt)"
