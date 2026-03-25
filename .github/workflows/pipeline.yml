@@ -29,8 +29,6 @@ jobs:
           path: |
             model_info.txt
             mlruns/
-            accuracy.txt
-
 
   deploy:
     needs: validate
@@ -50,7 +48,9 @@ jobs:
           name: model-artifacts
           path: .
 
-
+      - name: Debug files
+        run: ls -R
+          
       - name: Check threshold
         run: python check_threshold.py
 

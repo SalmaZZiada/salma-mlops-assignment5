@@ -1,11 +1,16 @@
 import mlflow
-import os
-import sys
 
-with open("accuracy.txt", "r") as f:
-    acc = float(f.read())
+mlflow.set_tracking_uri("file:./mlruns")
 
-if acc < 0.85:
-    raise Exception(f"Accuracy too low: {acc}")
+with open("model_info.txt", "r") as f:
+    run_id = f.read().strip()
 
-print(f"Accuracy OK: {acc}")
+client = mlflow.tracking.MlflowClient()
+run = client.get_run(run_id)
+
+accuracy = run.data.metrics["accuracy"]
+
+if accuracy < 0.85:
+    raise Exception(f"Accuracy too low: {accuracy}")
+
+print(f"Accuracy OK: {accuracy}")

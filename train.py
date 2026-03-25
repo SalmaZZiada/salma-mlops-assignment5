@@ -5,7 +5,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-# Use secret
 mlflow.set_tracking_uri("file:./mlruns")
 
 X, y = make_classification(n_samples=500, n_features=10)
