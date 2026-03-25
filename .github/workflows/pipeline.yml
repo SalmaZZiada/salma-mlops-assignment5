@@ -52,11 +52,12 @@ jobs:
           ls -R
           
       - run: |
-          export MLFLOW_TRACKING_URI=file:./mlruns
           python check_threshold.py
                 
 
       - name: Check threshold
+        env:
+          MLFLOW_TRACKING_URI: file:./mlruns
         run: python check_threshold.py
 
       - run: |
