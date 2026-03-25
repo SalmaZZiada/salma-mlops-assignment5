@@ -16,10 +16,6 @@ jobs:
         with:
           python-version: '3.10'
 
-      - run: pip install mlflow scikit-learn pandas dvc
-
-      - run: dvc pull
-
       - name: Train model
         run: python train.py
 
@@ -28,7 +24,7 @@ jobs:
           name: model-artifacts
           path: |
             model_info.txt
-            mlruns/
+            accuracy.txt
 
   deploy:
     needs: validate
@@ -37,27 +33,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - run: pip install mlflow
-
       - uses: actions/download-artifact@v4
         with:
           name: model-artifacts
-          path: .
-      - run: |
-          echo "==== FILES ===="
-          ls -R
-          
-      - run: |
-          python check_threshold.py
-                
 
       - name: Check threshold
-        env:
-          MLFLOW_TRACKING_URI: file:./mlruns
         run: python check_threshold.py
 
       - run: |

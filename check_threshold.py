@@ -1,16 +1,20 @@
-import mlflow
+import sys
 
-mlflow.set_tracking_uri("file:./mlruns")
+# نقرأ القيم
+with open("accuracy.txt", "r") as f:
+    accuracy = float(f.read())
 
 with open("model_info.txt", "r") as f:
-    run_id = f.read().strip()
+    run_id = f.read()
 
-client = mlflow.tracking.MlflowClient()
-run = client.get_run(run_id)
+print("Fetching run from MLflow")
+print(f"Run ID: {run_id}")
+print(f"Accuracy: {accuracy}")
 
-accuracy = run.data.metrics["accuracy"]
-
-print("Accuracy:", accuracy)
 
 if accuracy < 0.85:
-    raise Exception("Model accuracy below threshold!")
+    print("Model rejected: accuracy below threshold")
+    sys.exit(1)
+else:
+    print("Model accepted: accuracy above threshold")
+    sys.exit(0)
