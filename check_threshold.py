@@ -10,7 +10,7 @@ run = client.get_run(run_id)
 
 accuracy = run.data.metrics["accuracy"]
 
-if accuracy < 0.85:
-    raise Exception(f"Accuracy too low: {accuracy}")
+print("Accuracy:", accuracy)
 
-print(f"Accuracy OK: {accuracy}")
+if accuracy < 0.85:
+    raise Exception("Model accuracy below threshold!")

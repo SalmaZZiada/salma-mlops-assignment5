@@ -48,8 +48,13 @@ jobs:
           name: model-artifacts
           path: .
       - run: |
+          echo "==== FILES ===="
           ls -R
           
+      - run: |
+          export MLFLOW_TRACKING_URI=file:./mlruns
+          python check_threshold.py
+                
 
       - name: Check threshold
         run: python check_threshold.py
