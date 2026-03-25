@@ -29,6 +29,7 @@ jobs:
           path: |
             model_info.txt
             mlruns/
+            accuracy.txt
 
 
   deploy:
